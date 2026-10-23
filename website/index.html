@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>Mad_ESP Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @font-face {
+            font-family: "SystemFont";
+            src: url("fonts/system.otf") format("opentype");
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "ChalkdusterFont";
+            src: url("fonts/chalkduster.ttf") format("truetype");
+            font-display: swap;
+        }
+
+        :root {
+            color-scheme: dark;
+            --background: #000;
+            --foreground: #fff;
+            --muted: #bdbdbd;
+            --border: #fff;
+            --content-width: 960px;
+            --font-main: "SystemFont", Arial, Helvetica, sans-serif;
+            --font-brand: "ChalkdusterFont", Georgia, serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 110px;
+        }
+
+        /* Animated meteor background */
+        #meteor-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        body {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+        }
+
+        body {
+            max-width: var(--content-width);
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 24px;
+            background: var(--background);
+            color: var(--foreground);
+            font-family: var(--font-main);
+            letter-spacing: 0.02em;
+            line-height: 1.6;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        a:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .brand-font {
+            font-family: var(--font-brand);
+            font-weight: normal;
+        }
+
+        .panel {
+            border: 3px solid var(--border);
+            background: var(--background);
+        }
+
+        .site-header {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 72px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.92);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .site-header:hover {
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.08);
+        }
+
+        .site-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: bold;
+        }
+
+        .site-brand img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .main-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+        }
+
+        .main-nav a {
+            transition: color 0.18s ease, transform 0.18s ease;
+        }
+
+        .main-nav a:hover,
+        .footer-link:hover,
+        .install-link:hover {
+            color: #ccc;
+            text-decoration: underline;
+        }
+
+        .main-nav a:hover {
+            transform: translateY(-2px);
+        }
+
+        main {
+            display: block;
+        }
+
+        .section {
+            margin-bottom: 72px;
+            padding-bottom: 64px;
+            border-bottom: 1px solid #444;
+        }
+
+        .about-section {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .about-image,
+        .about-copy {
+            width: 50%;
+            min-width: 0;
+        }
+
+        .framed-image {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 8px;
+            box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.18);
+        }
+
+        .framed-image img {
+            width: 100%;
+            object-fit: contain;
+            animation: gentle-float 5s ease-in-out infinite;
+        }
+
+        .about-copy {
+            text-align: left;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 3px 10px;
+            border: 2px solid #fff;
+            background: #fff;
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3, p {
+            margin-top: 0;
+        }
+
+        .section-label {
+            margin-bottom: 10px;
+            color: #ddd;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            margin-bottom: 12px;
+            font-size: clamp(2.8rem, 7vw, 4.8rem);
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+        }
+
+        .hero-description {
+            max-width: 480px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .spec-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .spec-list li {
+            padding: 4px 9px;
+            border: 1px solid #777;
+            color: #ddd;
+            font-size: 0.8rem;
+        }
+
+        .spec-list i {
+            margin-right: 5px;
+            color: #fff;
+        }
+
+        .firmware-section,
+        .gallery-section {
+            text-align: center;
+        }
+
+        .firmware-brand {
+            margin-bottom: 28px;
+        }
+
+        .firmware-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px;
+            object-fit: contain;
+        }
+
+        .firmware-brand h2 {
+            margin-bottom: 0;
+            font-size: clamp(2rem, 5vw, 3.3rem);
+        }
+
+        .section-title {
+            margin-bottom: 12px;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: bold;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .version {
+            display: inline-block;
+            padding: 1px 8px;
+            background: #fff;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .firmware-actions {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            max-width: 560px;
+            margin: 28px auto 0;
+        }
+
+        .action-column {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            border: 3px solid #fff;
+            background: #000;
+            color: #fff;
+            box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.25);
+            font: bold 1.15rem var(--font-main);
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .button:hover {
+            background: #fff;
+            color: #000;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .button {
+            transition: background-color 0.15s ease, color 0.15s ease,
+                        transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .button-light {
+            background: #fff;
+            color: #000;
+        }
+
+        .button-light:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .button .button-caption {
+            display: block;
+            margin-top: 2px;
+            font-size: 0.75rem;
+            font-weight: normal;
+        }
+
+        .install-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #ccc;
+            font-size: 0.85rem;
+        }
+
+        .section-description {
+            margin-bottom: 24px;
+            color: #ccc;
+        }
+
+        .gallery-card {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .gallery-frame {
+            padding: 8px;
+            box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.18);
+        }
+
+        .gallery-frame img {
+            width: 100%;
+            border: 1px solid #444;
+            object-fit: cover;
+            transition: transform 0.25s ease, filter 0.25s ease;
+        }
+
+        .gallery-card:hover .gallery-frame img {
+            transform: scale(1.025);
+            filter: brightness(1.12);
+        }
+
+        .section {
+            opacity: 0;
+            transform: translateY(18px);
+            animation: section-appear 0.7s ease forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.12s; }
+        .section:nth-child(3) { animation-delay: 0.24s; }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes section-appear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gallery-caption {
+            margin: 14px 0 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .gallery-caption i {
+            margin-right: 8px;
+            color: #aaa;
+        }
+
+        .site-footer {
+            margin-top: 8px;
+            padding: 18px;
+            border: 2px solid #fff;
+            text-align: center;
+        }
+
+        .footer-brand {
+            margin-bottom: 4px;
+            font-size: 1.3rem;
+        }
+
+        .footer-description,
+        .copyright {
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+            margin: 14px 0;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .footer-link {
+            text-decoration: none;
+        }
+
+        .copyright {
+            margin: 12px 0 0;
+        }
+
+        @media (max-width: 640px) {
+            html {
+                scroll-padding-top: 140px;
+            }
+
+            .site-header {
+                top: 6px;
+            }
+
+            body {
+                padding: 14px;
+            }
+
+            .site-header {
+                flex-direction: column;
+                margin-bottom: 48px;
+                padding: 14px;
+            }
+
+            .main-nav {
+                justify-content: center;
+                gap: 18px;
+            }
+
+            .about-section {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .about-image,
+            .about-copy {
+                width: 100%;
+            }
+
+            .about-copy {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .spec-list {
+                justify-content: center;
+            }
+
+            .section {
+                margin-bottom: 52px;
+                padding-bottom: 48px;
+            }
+
+            .firmware-actions {
+                flex-direction: column;
+                gap: 20px;
+                max-width: 360px;
+            }
+
+            .gallery-card {
+                max-width: 300px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+
+            #meteor-canvas {
+                display: none;
+            }
+
+            .section {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="meteor-canvas" aria-hidden="true"></canvas>
+    <header class="site-header panel">
+        <a class="site-brand" href="#about" aria-label="Mad_ESP home">
+            <img src="img/logo.png" alt="Mad_ESP logo">
+            <span>Mad_ESP</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="#about"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+            <a href="#firmware"><i class="fa-solid fa-microchip" aria-hidden="true"></i> Firmware</a>
+            <a href="#gallery"><i class="fa-solid fa-images" aria-hidden="true"></i> Gallery</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section about-section" id="about">
+            <div class="about-image">
+                <div class="framed-image panel">
+                    <img src="img/dog.png" alt="Mad_ESP project dog illustration">
+                </div>
+            </div>
+
+            <div class="about-copy">
+                <div class="eyebrow"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Open Hardware</div>
+                <h2 class="section-label">About</h2>
+                <h1 class="hero-title brand-font">Mad_ESP</h1>
+                <p class="hero-description">A family of DIY PDAs based on the ESP32</p>
+
+                <ul class="spec-list" aria-label="Main features">
+                    <li><i class="fa-solid fa-wifi" aria-hidden="true"></i> Wi-Fi / BLE</li>
+                    <li><i class="fa-solid fa-display" aria-hidden="true"></i> SSD1306</li>
+                    <li><i class="fa-solid fa-code" aria-hidden="true"></i> C++</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section firmware-section" id="firmware">
+            <div class="firmware-brand">
+                <img class="firmware-logo" src="img/logo.png" alt="Mad_ESP logo">
+                <h2 class="brand-font">Mad_ESP</h2>
+            </div>
+
+            <h2 class="section-title">Firmware</h2>
+            <p><i class="fa-solid fa-code-branch" aria-hidden="true"></i> Actual version: <span class="version">Alpha 1.0.0</span></p>
+
+            <div class="firmware-actions">
+                <div class="action-column">
+                    <!-- Replace # with the actual firmware download URL when available. -->
+                    <a class="button" href="https://github.com/DoiKo35/Mad_ESP" aria-label="Firmware download link not configured">
+                        <i class="fa-solid fa-download" aria-hidden="true"></i> Download
+                    </a>
+                    <!-- Replace # with the installation guide URL when available. -->
+                    <a class="install-link" href="https://github.com/DoiKo35/Mad_ESP">
+                        <i class="fa-solid fa-book-open" aria-hidden="true"></i> How to install
+                    </a>
+                </div>
+
+                <div class="action-column">
+                    <a class="button button-light" href="https://github.com/DoiKo35/Mad_ESP" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-github" aria-hidden="true"></i> Source
+                        <span class="button-caption">GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section gallery-section" id="gallery">
+            <h2 class="section-title">Gallery</h2>
+            <p class="section-description"><i class="fa-solid fa-camera" aria-hidden="true"></i> Community DIY-PDA photos</p>
+
+            <figure class="gallery-card">
+                <div class="gallery-frame panel">
+                    <img src="img/community/kirilbk.jpg" alt="kiril_bk's DIY PDA">
+                </div>
+                <figcaption class="gallery-caption"><i class="fa-solid fa-wrench" aria-hidden="true"></i>kiril_bk’s DIY PDA</figcaption>
+            </figure>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-brand brand-font">Mad_ESP</div>
+        <p class="footer-description">Open-source ESP32 PDA hardware and software.</p>
+        <nav class="footer-nav" aria-label="Footer navigation">
+            <a class="footer-link" href="#about">About</a>
+            <a class="footer-link" href="#firmware">Firmware</a>
+            <a class="footer-link" href="#gallery">Gallery</a>
+            <a class="footer-link" href="https://github.com/DoiKo35/Mad_ESP" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+        <p class="copyright">&copy; Mad_ESP Project. All rights reserved.</p>
+    </footer>
+
+    <script>
+        (function () {
+            var canvas = document.getElementById("meteor-canvas");
+            var ctx = canvas.getContext("2d");
+            var meteors = [];
+            var width = 0;
+            var height = 0;
+            var lastSpawn = 0;
+            var reducedMotion = window.matchMedia &&
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            if (!ctx || reducedMotion) {
+                canvas.style.display = "none";
+                return;
+            }
+
+            function resizeCanvas() {
+                var ratio = Math.min(window.devicePixelRatio || 1, 2);
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = Math.floor(width * ratio);
+                canvas.height = Math.floor(height * ratio);
+                ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            }
+
+            function spawnMeteor() {
+                /* Meteors travel diagonally toward the lower-left corner. */
+                var fromRight = Math.random() < 0.72;
+                meteors.push({
+                    x: fromRight ? width + 30 : Math.random() * width,
+                    y: fromRight ? Math.random() * height * 0.72 - 30 : -30,
+                    vx: -(3.2 + Math.random() * 4.8),
+                    vy: 2.8 + Math.random() * 4.2,
+                    length: 18 + Math.random() * 42,
+                    alpha: 0.28 + Math.random() * 0.62,
+                    width: Math.random() < 0.25 ? 2 : 1
+                });
+            }
+
+            function animate(time) {
+                ctx.clearRect(0, 0, width, height);
+
+                if (time - lastSpawn > 95 && meteors.length < 55) {
+                    spawnMeteor();
+                    if (Math.random() > 0.55) spawnMeteor();
+                    lastSpawn = time;
+                }
+
+                for (var i = meteors.length - 1; i >= 0; i--) {
+                    var m = meteors[i];
+                    m.x += m.vx;
+                    m.y += m.vy;
+
+                    ctx.beginPath();
+                    ctx.moveTo(m.x, m.y);
+                    ctx.lineTo(m.x - m.vx * (m.length / 7), m.y - m.vy * (m.length / 7));
+                    ctx.strokeStyle = "rgba(220, 235, 255, " + m.alpha + ")";
+                    ctx.lineWidth = m.width;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = "rgba(180, 210, 255, 0.55)";
+                    ctx.stroke();
+
+                    if (m.x < -100 || m.y > height + 100) {
+                        meteors.splice(i, 1);
+                    }
+                }
+
+                ctx.shadowBlur = 0;
+                requestAnimationFrame(animate);
+            }
+
+            resizeCanvas();
+            window.addEventListener("resize", resizeCanvas);
+            document.addEventListener("visibilitychange", function () {
+                if (document.hidden) {
+                    meteors.length = 0;
+                    ctx.clearRect(0, 0, width, height);
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }());
+    </script>
+</body>
+</html>
