@@ -4,16 +4,16 @@
 
 # Mad_ESP
 
-### DIY Portable Gaming Console & PDA | Powered by ESP32 | Open Hardware
+### DIY Portable Console & PDA | Powered by ESP32 | Open Hardware
 
-**A custom, ultra-portable mini gaming console and Personal Digital Assistant (PDA) based on the ESP32 platform.**
+**A custom portable mini-console and Personal Digital Assistant based on the ESP32 platform.**
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-white?style=for-the-badge&logo=github&logoColor=black)](https://github.com/DoiKo35/Mad_ESP)
 [![Platform](https://img.shields.io/badge/Platform-ESP32-black?style=for-the-badge&logo=espressif)](https://www.espressif.com/)
 [![Firmware Version](https://img.shields.io/badge/Version-Alpha_1.0.0-orange?style=for-the-badge)](https://github.com/DoiKo35/Mad_ESP)
 [![Language](https://img.shields.io/badge/Language-C++-white?style=for-the-badge&logo=cplusplus&logoColor=black)](https://github.com/DoiKo35/Mad_ESP)
 
-*Simple hardware. Classic monochrome aesthetic. Endless DIY possibilities.*
+*Simple hardware. Classic retro aesthetics. Endless possibilities.*
 
 </div>
 
@@ -21,72 +21,66 @@
 
 ## 📟 About the Project
 
-**Mad_ESP** is a handheld open-source DIY device combining retro gaming with useful PDA utilities. Built around the **ESP32 DevKit V1**, it features a unique Doberman mascot, a custom-crafted operating system, built-in games, text viewer capabilities, and full multi-language support.
+**Mad_ESP** is a miniature handheld console and Personal Digital Assistant (PDA) built from scratch using the **ESP32 DevKit V1** module. The project combines monochrome display retro aesthetics, custom firmware featuring a mascot (a mad Doberman), mini-games, and useful utilities.
 
 ---
 
-## 🛠 Hardware Specifications
+## 🛠 Hardware Components
 
-| Component | Description |
-| :--- | :--- |
-| **Microcontroller** | ESP32 DevKit V1 (mounted on female headers) |
-| **Display** | 0.96" SSD1306 OLED (128x64 resolution, I2C interface) |
-| **Controls** | 4 Tactile Micro-Buttons (`L1`, `L2`, `R1`, `R2`) |
-| **Power Management** | TP4056 Lithium Charging Module (with protection circuitry) |
-| **Battery Compatibility**| Li-Po / Li-ion (e.g., Lenovo BL210, LG BL-44jn, or ultra-compact FL701230 3.7V 230mAh) |
-| **Audio** | Passive Piezo Buzzer for system alerts, 8-bit melodies, and game sound effects |
+- **MCU:** ESP32 DevKit V1
+- **Display:** SSD1306 OLED (128x64 pixels, I2C)
+- **Controls:** 4 Tactile Buttons (`L1`, `L2`, `R1`, `R2`)
+- **Power Management:** TP4056 Charging Module
+- **Battery:** Support for various batteries (Lenovo BL210, LG BL-44jn, or compact FL701230 3.7V 230mAh)
+- **Audio:** Piezo buzzer for interface sounds, music, and games
 
 ---
 
 ## ✨ Firmware Features (Alpha 1.0.0)
 
-* **Custom Boot Sequence:**
-  * Animated startup screen displaying the signature **Mad_ESP** mascot logo (128x64 bitmap).
-  * Startup audio chime generated via the onboard piezo speaker.
-* **Persistent Status Bar:**
-  * Real-time battery percentage indicator with an active charging animation.
-  * Status icons for active **Wi-Fi** and **Bluetooth** connections.
-* **PS-Style Main Menu:** Smooth horizontal carousel interface inspired by classic gaming consoles.
-* **Full Multi-Language Support:** Real Cyrillic rendering without transliteration — switch between **English**, **Russian** (Русский), and **Ukrainian** (Українська).
-* **Settings Application:**
-  * On-the-fly UI language selection.
-  * Toggle Wi-Fi and Bluetooth radios.
-  * Mute/unmute global audio (UI navigation, startup chime, in-game sound effects).
-  * Toggle boot logo styles (Signature Mascot vs. Minimal Text).
-  * Factory Reset option saved directly to non-volatile storage (EEPROM).
-* **System Information App:**
-  * Firmware version and hardware identifier.
-  * Internal chip temperature sensor reading.
-  * Real-time RAM utilization bar (e.g., `106 / 520 KB`).
-* **Power Management App:**
-  * Soft Shutdown, Reboot, and Power-Saving Sleep Mode (wakes up instantly on any button press).
-* **Games Application:**
-  * *Classic Clicker Game*.
-  * *Platformer / World Explorer* (Terraria-inspired 2D mechanics).
-  * In-game Pause menu with Save/Load state support, gameplay tweaks, and progress tracking.
-* **File Reader Application:**
-  * Read custom `.txt` files (cheat sheets, notes, books).
-  * Adjust text font sizes dynamically on screen.
-  * Wireless web-based file uploader via Wi-Fi/Bluetooth.
+- **Startup Sequence:** 
+  - Signature boot animation / bootlogo featuring the **Mad_ESP** mascot.
+  - Hardware startup melody played through the piezo buzzer.
+- **Status Bar:**
+  - Battery charge percentage display and charging status indicator.
+  - Wi-Fi and Bluetooth status icons.
+- **PS-style Menu:** Horizontal application carousel styled after classic consoles.
+- **Localization:** Full multi-language support (English, Russian, Ukrainian).
+- **Settings App:**
+  - UI language switching.
+  - Wi-Fi and Bluetooth toggles.
+  - Piezo buzzer sound control (system sounds, navigation, games).
+  - Bootlogo switching.
+  - Factory Reset.
+- **System Info:**
+  - Firmware version information.
+  - Hardware model info.
+  - Device/Battery temperature sensor.
+  - RAM usage state (e.g., `106/520 KB`).
+- **Power App:** Device power management (Power Off, Restart, Sleep mode for power saving).
+- **Games App:**
+  - *Classic Clicker*.
+  - *Platformer / Explorer* (Terraria-style).
+- **Files App:**
+  - Text file reading (`.txt` — cheat sheets, books, notes).
+  - Navigation and font size changing on the fly.
+  - Wireless file uploading from phone via Wi-Fi/Bluetooth.
 
 ---
 
-## 🎮 Navigation & Controls
+## 🎮 Controls
 
-System navigation and gameplay are streamlined across the 4 physical buttons:
+System and game navigation is performed using 4 physical buttons:
 
-* **`L1` / `L2`:** Move Left / Scroll Backwards / Navigate Menu Items
-* **`R1`:** Action / Select / Confirm (OK)
-* **`R2`:** Back / Exit / Cancel
-* **`L1` + `L2` (Simultaneous):** Jump action (in Platformer game)
+- **L1 / L2:** Left / Scroll back / Menu navigation
+- **R1:** Action / Select / OK
+- **R2:** Exit / Back
 
 ---
 
 ## 📄 License
 
-Please review the repository for licensing terms before redistributing or modifying any hardware schematics or software code. 
-
-If no specific license is declared, all rights remain with the original repository owner.
+Check the repository for license information before redistributing or modifying project components.
 
 ---
 
@@ -96,8 +90,8 @@ If no specific license is declared, all rights remain with the original reposito
 
 **Built for makers. Inspired by classic technology.**
 
-[GitHub Repository](https://github.com/DoiKo35/Mad_ESP) · [Report an Issue](https://github.com/DoiKo35/Mad_ESP/issues)
+[Repository](https://github.com/DoiKo35/Mad_ESP) · [Report an Issue](https://github.com/DoiKo35/Mad_ESP/issues)
 
-<sub>© Mad_ESP Project. All rights reserved.</sub>
+<sub>Mad_ESP Project.</sub>
 
 </div>
