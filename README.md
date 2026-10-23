@@ -4,150 +4,85 @@
 
 # Mad_ESP
 
-### DIY PDAs. ESP32. Open Hardware.
+### DIY Portable Console & PDA. Powered by ESP32. Open Hardware.
 
-**A family of DIY Personal Digital Assistants based on the ESP32.**
+**A custom portable mini-console and Personal Digital Assistant based on the ESP32 platform.**
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-white?style=for-the-badge&logo=github&logoColor=black)](https://github.com/DoiKo35/Mad_ESP)
 [![Platform](https://img.shields.io/badge/Platform-ESP32-black?style=for-the-badge&logo=espressif)](https://www.espressif.com/)
+[![Firmware Version](https://img.shields.io/badge/Version-Alpha_1.0.0-orange?style=for-the-badge)](https://github.com/DoiKo35/Mad_ESP)
 [![Language](https://img.shields.io/badge/C++-white?style=for-the-badge&logo=html5&logoColor=black)](https://github.com/DoiKo35/Mad_ESP)
 
-*Simple hardware. Classic aesthetics. Endless possibilities.*
+*Simple hardware. Classic retro aesthetics. Endless possibilities.*
 
 </div>
 
 ---
 
-## 📟 About
+## 📟 About / О проекте
 
-**Mad_ESP** is a DIY PDA project built around the ESP32 platform.
+**Mad_ESP** — это миниатюрная переносная консоль и карманный ассистент (PDA), собранный своими руками на базе модуля **ESP32 DevKit V1**. Проект сочетает в себе ретро-эстетику монохромных дисплеев, кастомную прошивку с маскотом (злым доберманом), мини-игры и полезные утилиты.
 
-The project combines embedded hardware, software development, and a monochrome retro aesthetic inspired by classic electronics.
+---
 
-The repository also includes a dedicated website presenting the project, its firmware, and community-built devices.
+## 🛠 Hardware Components / Аппаратная часть
 
-## ✨ Website Features
+* **MCU:** ESP32 DevKit V1 (на гребенках)
+* **Display:** SSD1306 OLED (128x64 пикселей, I2C)
+* **Controls:** 4 тактовые кнопки (`L1`, `L2`, `R1`, `R2`)
+* **Power Management:** Модуль заряда TP4056 (с защитой)
+* **Battery:** Поддержка аккумуляторов (Lenovo BL210, LG BL-44jn или компактный FL701230 3.7V 230mAh)
+* **Audio:** Пьезодинамик для звуков интерфейса, музыки и игр
 
-The Mad_ESP website uses a minimalist black-and-white design with a retro interface.
+---
 
-- **📌 Floating Header** — stays visible while scrolling.
-- **☄️ Meteor Shower** — an animated space background with continuously moving meteors.
-- **✨ Smooth Animations** — subtle transitions, floating imagery, and interactive hover effects.
-- **📱 Responsive Layout** — adapts to desktop and mobile screens.
-- **🖼️ Project Gallery** — showcases community DIY PDA builds.
-- **💾 Firmware Section** — provides access to firmware and installation resources.
-- **⚡ Lightweight Design** — classic HTML and CSS without Tailwind CSS.
-- **🔤 Custom Typography** — supports local fonts for a distinctive visual identity.
+## ✨ Firmware Features / Возможности прошивки (Alpha 1.0.0)
 
-## 🛠️ Technologies
+* **Startup Sequence:** 
+  * Фирменная загрузочная анимация / бутлого с маскотом **Mad_ESP** (128x64).
+  * Аппаратная стартовая мелодия (140 BPM, pitch -10) через пьезодинамик.
+* **Status Bar (Статус-бар):**
+  * Отображение заряда батареи в процентах и анимированная иконка процесса зарядки.
+  * Индикаторы состояния Wi-Fi и Bluetooth.
+* **PlayStation-style Menu:** Горизонтальная карусель приложений в стиле культовых консолей.
+* **Localization (Локализация):** Полная поддержка языков (English, Русский с реальной кириллицей, Українська).
+* **Settings App (Настройки):**
+  * Смена языка интерфейса.
+  * Включение/выключение Wi-Fi и Bluetooth.
+  * Управление звуком пьезодинамика (системные звуки, навигация, игры).
+  * Выбор бутлого (классический пес Mad_ESP или текстовый логотип).
+  * Сброс настроек до заводских (Factory Reset).
+* **System Info (О системе):**
+  * Информация о версии прошивки (`Mad_ESP Alpha 1.0.0`).
+  * Модель железа (`ESP32 DevKit V1`).
+  * Датчик температуры устройства/батареи.
+  * Прогресс-бар использования оперативной памяти (например, `106/520 KB`).
+* **Power App (Питание):** Управление питанием устройства (Выключение, Перезапуск, Спящий режим для экономии заряда с пробуждением по нажатию любой кнопки).
+* **Games App (Игры):**
+  * *Классический Кликер*.
+  * *Платформер/Бродилка* (в стиле террарии).
+  * Меню паузы в играх с возможностью настройки, сохранения, загрузки и выхода.
+* **Files App (Файлы):**
+  * Чтение текстовых файлов (`.txt` — шпаргалки, книги, заметки).
+  * Навигация и смена размера текста "на лету".
+  * Беспроводная загрузка файлов с телефона по Wi-Fi/Bluetooth.
 
-| Technology | Purpose |
-|---|---|
-| HTML5 | Website structure |
-| CSS3 | Layout, styling, and animations |
-| JavaScript | Dynamic effects and meteor animation |
-| Canvas API | Animated meteor background |
-| Font Awesome | Interface icons |
-| ESP32 | Target hardware platform |
-| GitHub | Source code and project hosting |
+---
 
-## 📂 Website Structure
+## 🎮 Controls / Управление
 
-```text
-Mad_ESP/
-├── website/
-│   ├── index.html
-│   ├── img/
-│   │   ├── logo.PNG
-│   │   ├── dog.png
-│   │   └── community/
-│   │       └── kirilbk.jpg
-│   └── fonts/
-│       ├── system.otf
-│       └── chalkduster.ttf
-└── README.md
-```
+Навигация по системе и играм осуществляется с помощью 4 физических кнопок:
 
-*The structure above describes the website's main assets; other project files may also be present.*
+* **L1 / L2:** Влево / Листать назад / Перемещение по меню
+* **R1:** Действие / Выбрать / ОК
+* **R2:** Выход / Назад
+* **Комбинация (L1 + L2):** Прыжок (в платформере)
 
-## 🚀 Getting Started
-
-### Run locally
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/DoiKo35/Mad_ESP.git
-   ```
-
-2. Open the project folder.
-
-3. Navigate to `website/`.
-
-4. Open `index.html` in your browser.
-
-For the best results, keep the `img/` and `fonts/` directories in their original locations.
-
-### Deploy
-
-The website can be hosted as a static site using GitHub Pages or another static hosting service.
-
-No server-side application is required for the basic website.
-
-## 🖥️ Website Sections
-
-### About
-Introduces Mad_ESP, its DIY PDA concept, and its ESP32-based platform.
-
-### Firmware
-Displays the current version label and provides links to firmware and source resources.
-
-**Current website version label:** `Alpha 1.0.0`
-
-### Gallery
-Features community hardware, including the DIY PDA by `kiril_bk`.
-
-## 🎨 Design Philosophy
-
-Mad_ESP embraces a deliberately simple visual identity:
-
-- Black backgrounds and white borders.
-- Sharp edges and high contrast.
-- Minimalist layouts.
-- Retro-inspired typography.
-- Smooth animations without unnecessary visual clutter.
-
-The goal is to combine the spirit of classic handheld electronics with modern web technologies.
-
-## 🗺️ Roadmap
-
-Potential improvements for future versions:
-
-- [ ] Expand the community gallery.
-- [ ] Add detailed hardware documentation.
-- [ ] Publish a dedicated firmware installation guide.
-- [ ] Add screenshots and project demonstrations.
-- [ ] Improve documentation for DIY builders.
-- [ ] Expand the website with additional project resources.
-
-*The roadmap is a list of potential improvements, not a list of completed features.*
-
-## 🤝 Contributing
-
-Have an idea, found a bug, or built your own DIY PDA?
-
-Contributions and constructive feedback are welcome.
-
-1. Fork the repository.
-2. Make your changes.
-3. Test your changes locally.
-4. Open a pull request describing your improvements.
+---
 
 ## 📄 License
 
 Check the repository for license information before redistributing or modifying project components.
-
-If a license has not yet been specified, one should be added to clarify the terms of use.
 
 ---
 
